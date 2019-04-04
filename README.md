@@ -1,4 +1,4 @@
-# GOKM-ArchivesSpace-scripts
+# archivesspace-gokm-scripts
 Repo for scripts to assist with batch processes in ASpace
 
 <h1>Subjects</h1>
