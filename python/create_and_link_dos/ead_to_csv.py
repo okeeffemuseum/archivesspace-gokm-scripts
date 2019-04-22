@@ -33,7 +33,7 @@ refid_components = []
 
 #get archival objects (item level) stored in series
 #make sure to put {urn:isbn:1-931666-22-9} (aka uniform resource name) in front of all tags
-filechildren = root.findall("./{urn:isbn:1-931666-22-9}archdesc/{urn:isbn:1-931666-22-9}dsc/{urn:isbn:1-931666-22-9}c[@level='series']/{urn:isbn:1-931666-22-9}c[@level = 'item']")
+filechildren = root.findall("./{urn:isbn:1-931666-22-9}archdesc/{urn:isbn:1-931666-22-9}dsc/{urn:isbn:1-931666-22-9}c/{urn:isbn:1-931666-22-9}c[@level = 'item']")
 
 for filechild in filechildren:
     ref_id = filechild.attrib['id'][7:]
