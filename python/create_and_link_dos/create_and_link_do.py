@@ -3,6 +3,7 @@ import json
 import csv
 import os
 import getpass
+import sys
 
 # This script will batch create new digital object records in ArchivesSpace (from CSV input) and link them as instances of an existing archival object
 
@@ -25,9 +26,9 @@ import getpass
 #AUTHENTICATION STUFF:
 
 #Prompt for backend URL ( e.g. http://localhost:8089) and login credentials
-aspace_url = input('ASpace backend URL: ')
-username = input('Username: ')
-password = getpass.getpass(prompt='Password: ')
+aspace_url = "http://archivesspace:8089" #input('ASpace backend URL: ')
+username = "admin" #input('Username: ')
+password = "admin" #getpass.getpass(prompt='Password: ')
 
 #Authenticate and get a session token
 try:
@@ -90,6 +91,7 @@ with open(archival_object_csv,'rt', encoding="utf8") as csvfile:
         if archival_object_json['ref_id'] == ref_id:
 
             try:
+
                 # Add the archival object uri to the row from the csv to write it out at the end
                 row.append(archival_object_uri)
 
@@ -98,16 +100,16 @@ with open(archival_object_csv,'rt', encoding="utf8") as csvfile:
                 # archival object separately into the appropriate title and date records in the digital object
                 # This also does not copy over any notes from the archival object
                 title = archival_object_json['title']
-                dates = archival_object_json['dates']
 
                 # Form the digital object JSON using the display string from the archival object and the identifier and the file_uri from the csv
-                new_dig_obj_json = {'title':title, 'dates':dates, 'digital_object_id':digital_object_identifier}
+                new_dig_obj_json = {'title':title, 'digital_object_id':digital_object_identifier}
                 dig_obj_data = json.dumps(new_dig_obj_json)
 
                 # Post the digital object
                 dig_obj_post = requests.post(aspace_url+'/repositories/2/digital_objects',headers=headers, data=dig_obj_data).json()
 
-                #print("New DO: " + dig_obj_post['status'])
+
+                print("New DO: " + dig_obj_post['status'])
 
                 #Grab the digital object uri 
                 dig_obj_uri = dig_obj_post['uri']
@@ -134,10 +136,8 @@ with open(archival_object_csv,'rt', encoding="utf8") as csvfile:
                 archival_object_update = requests.post(aspace_url+archival_object_uri,headers=headers,data=archival_object_data).json()
 
                 #print 'Archival Object Status: ' + archival_object_update['status']
-
             except:
-                print('ARCHIVAL OBJECT NOT FOUND: ' + ref_id)
-                row.append('ERROR: ARCHIVAL OBJECT NOT FOUND')
+                print("Unexpected Error: ", sys.exc_info()[0])
 
             # Write a new csv with all the info from the initial csv + the ArchivesSpace uris for the archival and digital objects
             with open(updated_archival_object_csv,'w') as csvout:
