@@ -20,12 +20,15 @@ def create_subject_dict():
     subject_dict = dict()
 
     # Adding depicted subjects with subject records
-    subject_dict[16] = {'name':'Georgia O\'Keeffe', 'excluded_text': {'Georgia O\'Keeffe\'s', 'by Georgia O\'Keeffe', 'Georgia O\'Keeffe Exhibition', 'of Georgia O\'Keeffe'}}
-    subject_dict[19] = {'name':'Alfred Stieglitz', 'excluded_text': {'Possibly Alfred Stieglitz'}}
+    subject_dict[16] = {'name':'Georgia O\'Keeffe', 'excluded_text': {'Georgia O\'Keeffe\'s', 'by Georgia O\'Keeffe', 'Georgia O\'Keeffe Exhibition', 'of Georgia O\'Keeffe', 'from Georgia O\'Keeffe', 'Installation view of \"Georgia O\'Keeffe\"'}}
+    subject_dict[19] = {'name':'Alfred Stieglitz', 'excluded_text': {'Possibly Alfred Stieglitz', 'Letter to Alfred Stieglitz'}}
     subject_dict[187] = {'name':'Carl Van Vechten', 'excluded_text': {'Carl Van Vechten gallery'}}
     subject_dict[104] = {'name':'Todd Webb', 'excluded_text':{'%'}}
     subject_dict[111] = {'name':'Helen Woodruff', 'excluded_text':{'%'}}
-
+    subject_dict[18] = {'name':'Maria Chabot', 'excluded_text':{'to Maria Chabot'}}
+    subject_dict[114] = {'name':'Tissie Bok', 'excluded_text':{'%'}}
+    subject_dict[171] = {'name':'Dorothy Stewart', 'excluded_text':{'%'}}
+    subject_dict[168] = {'name':'Mary Cabot Wheelwright', 'excluded_text':{'%'}}
     return subject_dict
 
 # Create a dictionary of archival objects where the key is the ref id and the value is the title
@@ -78,7 +81,7 @@ def create_archival_object_subject_dict(subject_dictionary, aspace_dictionary):
 def main():
     #pdb.set_trace()
 
-    aspace_dict = create_aspace_dict_from_ead('MS.37_20190723_190858_UTC__ead.xml')
+    aspace_dict = create_aspace_dict_from_ead('MS.9_20190724_204831_UTC__ead.xml')
     subject_dict = create_subject_dict()
 
     linked_dict = create_archival_object_subject_dict(subject_dict, aspace_dict)

@@ -99,7 +99,7 @@ with open(archival_object_csv,'rt', encoding="utf8") as csvfile:
                 # Note: a more sophisticated way of doing this would be to add the title and dates from the
                 # archival object separately into the appropriate title and date records in the digital object
                 # This also does not copy over any notes from the archival object
-                title = archival_object_json['title']
+                title = archival_object_json['display_string']
 
                 # Form the digital object JSON using the display string from the archival object and the identifier and the file_uri from the csv
                 new_dig_obj_json = {'title':title, 'digital_object_id':digital_object_identifier}
