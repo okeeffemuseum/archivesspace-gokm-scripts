@@ -44,7 +44,7 @@ def main():
                 dam_ID = row[0]
                 filename = row[1]
            
-                if component_unique_id in filename:
+                if "ASAO_"+component_unique_id in filename:
                     csvout.writerow([ref_ID, dam_ID])
                     
 if __name__ == "__main__": # runs main()
