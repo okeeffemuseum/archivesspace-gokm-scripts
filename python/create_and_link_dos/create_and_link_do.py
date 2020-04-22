@@ -19,8 +19,8 @@ import sys
 #5. repost the archival object to ASpace using the update archival object endpoint
 #6. write out a CSV containing the same information as the starting CSV plus the ARchivesSpace URIs for the new digital object and updated archival object
 
-# The 4 column csv should include a header row and be formatted with the columns below:
-# refID, digital object identifier, digital object title, publish?
+# The 2 column csv should include a header row and be formatted with the columns below:
+# refID, digital object identifier
 # The first column is row[0] in Python
 
 #AUTHENTICATION STUFF:
@@ -99,10 +99,17 @@ with open(archival_object_csv,'rt', encoding="utf8") as csvfile:
                 # Note: a more sophisticated way of doing this would be to add the title and dates from the
                 # archival object separately into the appropriate title and date records in the digital object
                 # This also does not copy over any notes from the archival object
-                title = archival_object_json['title']
+                title = archival_object_json['display_string']
 
                 # Form the digital object JSON using the display string from the archival object and the identifier and the file_uri from the csv
-                new_dig_obj_json = {'title':title, 'digital_object_id':digital_object_identifier}
+                new_dig_obj_json = {"file_versions":[{ "jsonmodel_type":"file_version",
+                                                       "is_representative":False,
+                                                       "file_uri":"http://iiif.okeeffemuseum.org/image/iiif/2/"+digital_object_identifier,
+                                                       "xlink_actuate_attribute":"onRequest",
+                                                       "xlink_show_attribute":"embed",
+                                                       "publish":True}],
+                                    'title':title,
+                                    'digital_object_id':digital_object_identifier}
                 dig_obj_data = json.dumps(new_dig_obj_json)
 
                 # Post the digital object

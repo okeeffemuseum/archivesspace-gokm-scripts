@@ -12,7 +12,7 @@ xmlfile = "AS_in.xml"
 def save(refid_component_array, csv_file_name): 
   
     # specifying the fields for csv file 
-    fields = ['refid', 'component_id', 'title'] 
+    fields = ['refid', 'title'] 
   
     # writing to csv file 
     with open(csv_file_name, 'w') as csvfile: 
@@ -33,13 +33,13 @@ refid_components = []
 
 #get archival objects (item level) stored in series
 #make sure to put {urn:isbn:1-931666-22-9} (aka uniform resource name) in front of all tags
-filechildren = root.findall("./{urn:isbn:1-931666-22-9}archdesc/{urn:isbn:1-931666-22-9}dsc/{urn:isbn:1-931666-22-9}c/{urn:isbn:1-931666-22-9}c[@level = 'item']")
+filechildren = root.findall("./{urn:isbn:1-931666-22-9}archdesc/{urn:isbn:1-931666-22-9}dsc/{urn:isbn:1-931666-22-9}c[@id = 'aspace_b19b5a9039eef4403f767bb54df9f608']/{urn:isbn:1-931666-22-9}c/{urn:isbn:1-931666-22-9}c[@level = 'item']")
 
 for filechild in filechildren:
     ref_id = filechild.attrib['id'][7:]
-    component_id = filechild.findall('./{urn:isbn:1-931666-22-9}did/{urn:isbn:1-931666-22-9}unitid')[0].text
+    # component_id = filechild.findall('./{urn:isbn:1-931666-22-9}did/{urn:isbn:1-931666-22-9}unitid')[0].text
     title = filechild.findall('./{urn:isbn:1-931666-22-9}did/{urn:isbn:1-931666-22-9}unittitle')[0].text
-    refid_components.append({"refid":ref_id, "component_id":component_id, "title":title})
+    refid_components.append({"refid":ref_id, "title":title})
 
 #get archival objects not stored in files
 # children = root.findall("./{urn:isbn:1-931666-22-9}archdesc/{urn:isbn:1-931666-22-9}dsc/{urn:isbn:1-931666-22-9}c/{urn:isbn:1-931666-22-9}c[@level='item']")
