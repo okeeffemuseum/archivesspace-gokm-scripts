@@ -5,7 +5,8 @@ Authors: Colton and Rana
 """
 import csv
 import xml.etree.ElementTree as ET
-xmlfile = input('Please enter path to input CSV: ')
+xmlfile = input('Please enter path to input EAD: ')
+csvfile = input('Please enter the filename with path for the output CSV: ')
 
 
 
@@ -33,16 +34,18 @@ refid_components = []
 
 #get archival objects (item level) stored in series
 #make sure to put {urn:isbn:1-931666-22-9} (aka uniform resource name) in front of all tags
-filechildren = root.findall("./{urn:isbn:1-931666-22-9}archdesc/{urn:isbn:1-931666-22-9}dsc/{urn:isbn:1-931666-22-9}c[@level = 'item']")
+filechildren = root.findall("./{urn:isbn:1-931666-22-9}archdesc/{urn:isbn:1-931666-22-9}dsc/{urn:isbn:1-931666-22-9}c/{urn:isbn:1-931666-22-9}c[@level = 'item']")
 
 for filechild in filechildren:
     ref_id = filechild.attrib['id'][7:]
-    component_id = filechild.findall('./{urn:isbn:1-931666-22-9}did/{urn:isbn:1-931666-22-9}unitid')[0].text
+    component_id = ""
+    if filechild.findall('./{urn:isbn:1-931666-22-9}did/{urn:isbn:1-931666-22-9}unitid'):
+        component_id = filechild.findall('./{urn:isbn:1-931666-22-9}did/{urn:isbn:1-931666-22-9}unitid')[0].text
     title = filechild.findall('./{urn:isbn:1-931666-22-9}did/{urn:isbn:1-931666-22-9}unittitle')[0].text
     refid_components.append({"refid":ref_id, "component_id":component_id, "title":title})
 
 #get archival objects not stored in files
-# children = root.findall("./{urn:isbn:1-931666-22-9}archdesc/{urn:isbn:1-931666-22-9}dsc/{urn:isbn:1-931666-22-9}c/{urn:isbn:1-931666-22-9}c[@level='item']")
+# children = root.findall("./{urn:isbn:1-931666-22-9}archdesc/{urn:isbn:1-931666-22-9}dsc/{urn:isbn:1-931666-22-9}c{urn:isbn:1-931666-22-9}c/{urn:isbn:1-931666-22-9}c[@level='item']")
 
 # for child in children:
 #     ref_id = child.attrib['id'][7:]
@@ -51,4 +54,4 @@ for filechild in filechildren:
 #     refid_components.append({"refid":ref_id, "component_id":component_id, "title":title})
 
     
-save(refid_components, "AS_in.csv")
+save(refid_components, csvfile)
