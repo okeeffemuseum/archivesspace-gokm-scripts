@@ -1,6 +1,9 @@
 # archivesspace-gokm-scripts
 Repo for scripts to assist with batch processes in ASpace
 
+Scripts that have been tested and documented for use within the GOKM workflow are in the archivesspace-gokm-scripts/python/gokm_documented/ folder. The assocuated documentation resides in the CIM handbook. GOKM team, please use the tested and documented versions of the scripts unless working on a new process.
+
+
 <h1>Archival Objects</h1>
 <b>add_copyright_notes.py</b>
 <p>Script reads in a 1 column CSV containing archival object ref IDs and creates a new usestrict note with label "Copyright Management." Adapted from https://github.com/duke-libraries/archivesspace-duke-scripts/blob/master/python/duke_as_replace_notes.py</p>
