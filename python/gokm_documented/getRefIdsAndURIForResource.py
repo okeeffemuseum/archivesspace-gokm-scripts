@@ -15,6 +15,7 @@ import getpass
 
 #AUTHENTICATION STUFF:
 baseURL = 'http://archivesspace:8089'
+#baseURL = 'http://asliz:8089'
 #Prompt for backend URL ( e.g. http://localhost:8089) and login credentials
 aspace_url = baseURL #input('ASpace backend URL: ')
 username = input('ASpace Username: ')
@@ -58,7 +59,7 @@ resourceID = input('Enter resource ID: ')
 csvfile = input('Please enter the filename for the output CSV, make sure to add a .csv extension: ')
 
 f = csv.writer(open (csvfile, 'w', newline='', encoding='utf-8'))
-f.writerow(['title'] + ['uri'] + ['ref_id'])
+f.writerow(['title'] + ['uri'] + ['ref_id'] + ['component_id'])
 
 endpoint = '/repositories/' + repository + '/resources/' + resourceID + '/tree'
 
@@ -76,7 +77,8 @@ for archivalObject in archivalObjects:
     title = output['title']
     uri = output['uri']
     ref_id = output['ref_id']
-    f.writerow([title] + [uri] + [ref_id])
+    component_id = output['component_id']
+    f.writerow([title] + [uri] + [ref_id] + [component_id])
 
 elapsedTime = time.time() - startTime
 m, s = divmod(elapsedTime, 60)
