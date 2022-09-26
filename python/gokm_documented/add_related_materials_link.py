@@ -9,7 +9,6 @@ import getpass
 
 #Script will write out log of actions to CSV file (updated_notes.csv) including: 
 #tested L.Neely 1/4/2021; output file needs adjusting, but input is good.
-#TEST WITH MULTIPLE RELATED LINKS
 
 
 def opencsv():
@@ -22,8 +21,8 @@ def opencsv():
     return csvin
 
 
-def delete_note():
-    aspace_url = 'http://asliz:8089'
+def add_rel_note():
+    aspace_url = 'http://archivesspace:8089'
     username = input('Please enter your username: ')
     password = getpass.getpass(prompt='Please enter your password: ')
     auth = requests.post(aspace_url+'/users/'+username+'/login?password='+password+'&expiring=false').json()
@@ -38,7 +37,7 @@ def delete_note():
         exit()
 
     #input related material link to add
-    material_link = input ('Add the URI for the related materials, it should begin with https://data.okeeffemuseum.org/:' )
+    material_link = input ('Add the URI for the related materials, it should begin with http://data.okeeffemuseum.org/:' )
     
     #adds a note's content in ArchivesSpace using a persistent ID
     csvfile = opencsv()
@@ -60,7 +59,7 @@ def delete_note():
         print('Found archival_object: ' + archival_object_uri)
         archival_object_json = requests.get(aspace_url+archival_object_uri,headers=headers).json()
 
-        relatedmaterial_notes = [{"jsonmodel_type":"note_multipart","label":"Related Materials Link","type":"relatedmaterial","subnotes":[{"jsonmodel_type":"note_text","content": material_link,"publish":False}],"publish":False}]
+        relatedmaterial_notes = [{"jsonmodel_type":"note_multipart","label":"Related Materials Link","type":"relatedmaterial","subnotes":[{"jsonmodel_type":"note_text","content": material_link,"publish":True}],"publish":True}]
 
         archival_object_json['notes'] = archival_object_json['notes'] + relatedmaterial_notes
                 
@@ -78,4 +77,4 @@ def delete_note():
             pass
         writer.writerow(row)
 
-delete_note()
+add_rel_note()
