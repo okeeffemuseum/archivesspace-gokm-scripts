@@ -107,7 +107,7 @@ with open(archival_object_csv,'rt', encoding="utf8") as csvfile:
                 # Form the digital object JSON using the display string from the archival object and the identifier and the file_uri from the csv
                 new_dig_obj_json = {"file_versions":[{ "jsonmodel_type":"file_version",
                                                        "is_representative":False,
-                                                       "file_uri":"http://iiif.okeeffemuseum.org/image/iiif/2/"+digital_object_identifier,
+                                                       "file_uri":"https://iiif.okeeffemuseum.org/image/iiif/2/"+digital_object_identifier,
                                                        "xlink_actuate_attribute":"onRequest",
                                                        "xlink_show_attribute":"embed",
                                                        "publish":True}],
